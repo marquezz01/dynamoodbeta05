@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamood - Plataforma Académica</title>
+    
+    <!-- Metatags para SEO y redes sociales -->
+    <meta name="description" content="Dynamood es una aplicación académica que optimiza la comunicación en comunidades educativas, desarrollada con un enfoque en diseño UX/UI y sostenibilidad.">
+    <meta property="og:title" content="Dynamood - Innovación en Comunicación Académica">
+    <meta property="og:description" content="Transformamos la comunicación académica en una experiencia intuitiva y funcional. Conoce el proyecto Dynamood.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://placehold.co/1200x630/2D436C/FFFFFF?text=DYNAMOOD">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* =============================================
+        GUÍA DE ESTILO OFICIAL - DYNAMOOD
+        =============================================
+        COLORES:
+        - Azul Corporativo: #2D436C (Principal)
+        - Gris Oscuro: #111827 (Texto Principal)
+        - Gris Medio: #6B7280 (Texto Secundario)
+        - Blanco Puro: #FFFFFF (Fondo Principal)
+        - Gris Claro: #F8F9FB (Fondos de Sección)
+
+        TIPOGRAFÍA:
+        - Familia: 'Inter', sans-serif
+        - Base: 16px
+        =============================================
+        */
+        :root {
+            --dynamo-blue: #2D436C;
+            --dynamo-dark-gray: #111827;
+            --dynamo-medium-gray: #6B7280;
+            --dynamo-light-gray: #F8F9FB;
+            --dynamo-white: #FFFFFF;
+            /* Variables para el modelo 3D del celular */
+            --phone-w: 350px; /* ← aumenté el ancho */
+            --phone-h: 680px; /* ← Pantalla un poco más alargada */
+            --frame-color:#0b1220;
+            --shadow:0 20px 40px rgba(2,6,23,0.6); /* Nuevo */
+            /* --glass-grad: linear-gradient(135deg,#0ea5e9 0%, #7c3aed 100%); */ /* Eliminado */
+        }
+
+        /* Base y Tipografía */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--dynamo-white);
+            color: var(--dynamo-dark-gray);
+            font-family: 'Inter', system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif; /* Añadido fallback fonts */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            cursor: none; /* Ocultamos el cursor por defecto */
+        }
+        
+        /* Pantalla de Carga */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dynamo-dark-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+        }
+        .preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-text {
+            color: var(--dynamo-white);
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Cursor Personalizado */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--dynamo-blue);
+            transition: transform 0.1s linear;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--dynamo-blue);
+            transition: transform 0.2s ease-out, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+        }
+        .cursor-outline.hover {
+            transform: scale(1.5);
+            width: 60px;
+            height: 60px;
+            border-color: rgba(45, 67, 108, 0.5);
+        }
+        /* Hide custom cursor on touch devices or when hover is not available */
+        @media (hover: none) {
+            body { cursor: auto; }
+            .cursor-dot, .cursor-outline { display: none; }
+        }
+        
+        /* Animaciones de Revelado en Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+             font-size: clamp(2.5rem, 8vw, 4rem);
+             font-weight: 700; /* Reducido para un look más refinado */
+             color: var(--dynamo-dark-gray);
+             line-height: 1.1;
+        }
+        
+        .hero-title-gradient {
+            background: linear-gradient(45deg, var(--dynamo-blue), #5a7fbf, var(--dynamo-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradient-flow 4s linear infinite;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--dynamo-blue);
+            border: 1px solid var(--dynamo-blue);
+        }
+        .card {
+            border-radius: 12px; /* Ligeramente más redondeado */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .btn-primary {
+            background-color: var(--dynamo-blue);
+            color: var(--dynamo-white);
+            font-weight: 700;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(45, 67, 108, 0.2), 0 4px 6px -4px rgba(45, 67, 108, 0.2);
+        }
+        
+        /* Estilo futurista para la navegación */
+        .nav-capsule {
+            background-color: var(--dynamo-light-gray); /* Cambiado a un gris sólido para mejor contraste */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05); /* Borde más sutil */
+            transition: all 0.4s ease;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: var(--dynamo-blue);
+        }
+
+        /* Animación maquiavélica para el logo de la nav */
+        .nav-logo-img {
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Curva de easing con rebote */
+        }
+        .nav-capsule:hover .nav-logo-img {
+            transform: rotate(360deg);
+        }
+
+        /* Transición para ocultar/mostrar la navegación */
+        #main-nav {
+            transition: transform 0.3s ease-in-out;
+        }
+        #main-nav.nav-hidden {
+            transform: translateY(-100%);
+        }
+
+
+        /* Estilo para el enlace activo en el menú */
+        .nav-link.active {
+            background-color: var(--dynamo-blue);
+            color: var(--dynamo-white);
+            font-weight: 700;
+        }
+        .nav-link.active:hover {
+            color: var(--dynamo-white); /* Mantenemos el color en hover */
+        }
+
+        /* Animación de pulso para llamar la atención */
+        .pulse-animation {
+            animation: pulse-effect 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        @keyframes pulse-effect {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(45, 67, 108, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(45, 67, 108, 0);
+            }
+        }
+
+        /* Efecto Aurora Boreal */
+        .aurora-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .aurora-bg::before,
+        .aurora-bg::after {
+            content: '';
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, rgba(45, 67, 108, 0.15) 0%, transparent 40%);
+            border-radius: 50%;
+            opacity: 0.5;
+            mix-blend-mode: screen;
+            animation: aurora-flow 25s infinite linear;
+        }
+        .aurora-bg::after {
+            background: radial-gradient(circle at center, rgba(135, 206, 235, 0.15) 0%, transparent 45%);
+            animation-name: aurora-flow-2;
+            animation-duration: 35s;
+        }
+        @keyframes aurora-flow {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1.5); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1.5); }
+        }
+        @keyframes aurora-flow-2 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1.8); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg) scale(1.8); }
+        }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Estilo para logos de aliados */
+        .ally-logo {
+            max-height: 72px; /* Aumentado para hacer los logos más grandes */
+            width: auto;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .ally-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* Animación de Marquee para Logos */
+        .logo-marquee-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding: 2rem 0;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .logo-marquee-content {
+            display: flex;
+            width: fit-content; /* Ancho basado en el contenido */
+            animation: marquee 40s linear infinite;
+        }
+        .logo-marquee-container:hover .logo-marquee-content {
+            animation-play-state: paused;
+        }
+        .logo-item {
+            flex-shrink: 0;
+            padding: 0 4rem; /* Espacio entre logos */
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* Estilos para la demo de Dynamood Ads */
+        .ads-demo-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        .ads-demo-card:nth-child(2) {
+            transform: translateY(10px) scale(0.95);
+            filter: blur(2px);
+            opacity: 0.7;
+            transition: all 0.4s ease;
+        }
+        .card:hover .ads-demo-card:nth-child(1) {
+            transform: translateY(-15px) rotate(-3deg);
+        }
+        .card:hover .ads-demo-card:nth-child(2) {
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+            opacity: 1;
+        }
+
+        /* Estilos para la demo de Dynamood Community */
+        .community-card-content {
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
+        }
+        .community-demo-ui {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            transform: translateY(50%);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
+            border-radius: 0 0 12px 12px;
+        }
+        .card.community-card .community-card-content-wrapper:hover {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+        .card.community-card .community-card-content-wrapper:hover + .community-demo-ui {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .kanban-col {
+            background-color: var(--dynamo-light-gray);
+        }
+
+        /* Estilo para las imágenes de la campaña con efecto hover */
+        .campaign-image {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .campaign-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Estilos para el modelo 3D del celular */
+        .phone-3d-container { /* Renombrado para la nueva implementación */
+            margin-top: 4rem; /* Espacio superior */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px; /* Espacio entre elementos */
+            padding: 0; /* Eliminar padding del contenedor */
+            height: auto; /* Permitir que la altura se ajuste al contenido */
+            color: var(--dynamo-dark-gray); /* Ajustar color de texto para el fondo claro */
+        }
+
+        .stage {
+            perspective: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Contenedor 3D que rotamos */
+        .scene {
+            width: var(--phone-w);
+            height: var(--phone-h);
+            transform-style:preserve-3d;
+            /* transition:transform 400ms cubic-bezier(.2,.9,.3,1); */ /* Eliminado para evitar conflicto con JS animation */
+            will-change:transform;
+            cursor:grab;
+        }
+        .scene:active { cursor:grabbing; }
+
+        /* El "teléfono" (caja en 3D) */
+        .phone {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 42px; /* bordes más redondeados por el aumento */
+            background: var(--frame-color);
+            transform-style: preserve-3d;
+            box-shadow: 0 12px 40px rgba(2, 6, 23, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+        }
+
+        /* Caras del teléfono */
+        .face{
+            position:absolute;inset:0;border-radius:inherit;
+            backface-visibility:hidden;transform-style:preserve-3d
+        }
+
+        /* Pantalla frontal */
+        .front{
+            transform: translateZ(22px);
+            -webkit-backface-visibility: hidden; /* Solución para renderizado de iframe en 3D */
+            backface-visibility: hidden; /* Oculta la parte trasera de la cara frontal */
+            overflow: hidden;
+        }
+        .front iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 42px; /* Adaptado para que coincida con el borde del celular */
+            transform: scale(1.05); /* zoom leve para cortar los bordes blancos */
+        }
+
+        /* Parte trasera (back) y logo */
+        .back {
+            transform: rotateY(180deg) translateZ(22px);
+            background: #0b1220;
+            display: flex; /* Para centrar el contenido */
+            justify-content: center;
+            align-items: center;
+        }
+        .back img {
+            width: 60%; /* Ajusta el tamaño del logo */
+            max-width: 120px; /* Tamaño máximo para que no sea demasiado grande */
+            opacity: 0.7; /* Un poco de transparencia para que se integre mejor */
+            filter: grayscale(100%) brightness(150%); /* Para un look más sutil y monocromático */
+        }
+
+        /* Responsivo */
+        @media (max-width:520px){
+            :root{--phone-w:200px;--phone-h:400px} /* Ajustado para mantener la proporción */
+        }
+
+        /* Estilos para la nueva línea de tiempo de Metodología */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+        }
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background-color: #e5e7eb;
+        }
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 1rem 2.5rem;
+        }
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        .timeline-dot {
+            position: absolute;
+            top: 1.5rem;
+            width: 20px;
+            height: 20px;
+            background-color: var(--dynamo-blue);
+            border: 4px solid var(--dynamo-white);
+            border-radius: 50%;
+            z-index: 10;
+        }
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+            transform: translateX(0);
+        }
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Pantalla de Carga -->
+    <div class="preloader">
+        <div class="preloader-text">DYNAMOOD</div>
+    </div>
+
+    <!-- Cursor Personalizado -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navegación Flotante Futurista -->
+    <nav id="main-nav" class="sticky top-0 z-50 p-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <!-- Logo Capsule -->
+                <a href="index.html" class="nav-capsule shadow-md rounded-full p-2 hover:shadow-lg">
+                    <img src="img/logo-grande.png" alt="Dynamood Logo" class="h-8 nav-logo-img">
+                </a>
+                
+                <!-- Hamburger Menu (Mobile) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="nav-capsule shadow-md rounded-full p-2 focus:outline-none">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+                
+                <!-- Navigation Links & CTA Capsule -->
+                <div id="nav-links" class="nav-capsule hidden md:flex items-center space-x-1 shadow-md rounded-full p-1.5 hover:shadow-lg">
+                    <a href="index.html#que-es" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">El Proyecto</a>
+                    <a href="index.html#metodologia" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Metodología</a>
+                    <a href="index.html#aliados" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Aliados</a>
+                    <a href="diseno-estrategico.html" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm pulse-animation">Diseño Estratégico</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 1. Hero Section -->
+        <header class="relative overflow-hidden bg-white">
+            <!-- Fondo Aurora -->
+            <div class="aurora-bg"></div>
+            
+            <!-- Contenido del Hero -->
+            <div class="relative z-10 max-w-7xl mx-auto pt-24 pb-32 sm:pt-32 sm:pb-40 px-4 sm:px-6 lg:px-8 flex flex-col items-center md:grid md:grid-cols-2 md:gap-24 md:text-left md:items-center">
+                <!-- Columna Izquierda: Texto y CTA -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <h1 class="text-5xl font-bold tracking-tighter text-gray-900 sm:text-6xl md:text-8xl reveal">
+                        <span class="block">Comunicación académica,</span>
+                        <span class="block hero-title-gradient">finalmente intuitiva.</span>
+                    </h1>
+                    <p class="mt-8 max-w-full text-lg sm:text-xl reveal" style="color: var(--dynamo-medium-gray);">
+                        Dynamood es la plataforma que centraliza la vida universitaria para fortalecer la comunidad académica a través de un diseño funcional y sostenible.
+                    </p>
+
+                    <!-- Llamada a la Acción (CTA) -->
+                    <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+                        <a href="#resultados" class="btn btn-primary text-lg px-8 py-3">Ver Prototipo</a>
+                        <a href="#que-es" class="btn btn-secondary text-lg px-8 py-3">Conocer Más</a>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Modelo 3D del celular -->
+                <div class="phone-3d-container reveal mt-16 md:mt-0">
+                    <div class="stage" id="stage">
+                        <div class="scene" id="scene" aria-label="Modelo 3D de un celular">
+                            <div class="phone" id="phone">
+                                <div class="face front">
+                                    <!-- Embebemos el prototipo de Figma aquí -->
+                                    <iframe
+                                      src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/jshe8ZgqzSoSfPVk2wLOCL/Dynamood-Final?node-id=257-44&starting-point-node-id=257%3A44&scaling=scale-down&hide-ui=1"
+                                      allowfullscreen>
+                                    </iframe>
+                                </div>
+                                <div class="face back">
+                                    <!-- Logo en la parte trasera del teléfono -->
+                                    <!-- Reemplaza 'img/logo-dynamood-blanco.png' con la ruta a tu logo -->
+                                    <img src="img/logo-grande.png" alt="Dynamood Logo">
+                                </div>
+                            </div>
+                            <!-- Botón para restablecer la vista del celular -->
+                            <button id="reset-phone-view" class="absolute bottom-4 left-1/2 -translate-x-1/2 p-3 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-dynamo-blue z-10">
+                                <i data-feather="crosshair" class="w-5 h-5 text-gray-700"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+
+        <!-- 2. Qué es Dynamood Section -->
+        <section id="que-es" class="py-20 md:py-32" style="background-color: var(--dynamo-light-gray);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="section-title hero-title-gradient">¿Qué es Dynamood?</h2>
+                    <p class="mt-4 text-lg space-y-4" style="color: var(--dynamo-medium-gray);">
+                        <span>Dynamood es una aplicación académica desarrollada para optimizar la comunicación entre estudiantes, docentes e institución en el programa de Diseño Gráfico de la CUN. Su enfoque combina diseño UX/UI, comunicación visual y sostenibilidad, ofreciendo una herramienta intuitiva y funcional que mejora el flujo de información y fortalece la comunidad académica.</span>
+                        <br><br>
+                        <span>Nace de la necesidad de centralizar los canales de comunicación y brindar una experiencia más eficiente, moderna y adaptable al contexto de los estudiantes de jornada nocturna.</span>
+                    </p>
+                </div>
+                <!-- Espacio para Imagen Principal del Producto -->
+                <div class="reveal flex items-center justify-center">
+                    <img src="https://placehold.co/600x450/F8F9FB/2D436C?text=Mockup+App" 
+                         alt="Mockup de la aplicación Dynamood en un dispositivo" 
+                         class="rounded-xl shadow-2xl w-full max-w-md">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Objetivo del Proyecto -->
+        <section id="objetivo" class="py-20 md:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal">
+                    <h2 class="section-title">Objetivo del Proyecto</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg" style="color: var(--dynamo-medium-gray);">
+                        El objetivo principal de Dynamood es desarrollar un modelo de negocio sostenible que permita su expansión a otras instituciones educativas.
+                    </p>
+                </div>
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="card p-8 reveal">
+                        <i data-feather="user" class="mx-auto w-10 h-10 mb-4" style="color: var(--dynamo-blue);"></i>
+                        <h3 class="text-xl font-bold">Suscripción Individual</h3>
+                        <p class="mt-2" style="color: var(--dynamo-medium-gray);">Acceso premium para estudiantes y docentes.</p>
+                    </div>
+                    <div class="card p-8 reveal" style="transition-delay: 0.1s;">
+                        <i data-feather="shield" class="mx-auto w-10 h-10 mb-4" style="color: var(--dynamo-blue);"></i>
+                        <h3 class="text-xl font-bold">Licenciamiento Institucional</h3>
+                        <p class="mt-2" style="color: var(--dynamo-medium-gray);">Implementación completa en universidades o facultades.</p>
+                    </div>
+                    <div class="card p-8 reveal" style="transition-delay: 0.2s;">
+                        <i data-feather="gift" class="mx-auto w-10 h-10 mb-4" style="color: var(--dynamo-blue);"></i>
+                        <h3 class="text-xl font-bold">Modalidad Freemium</h3>
+                        <p class="mt-2" style="color: var(--dynamo-medium-gray);">Versión gratuita con funciones básicas y opciones de mejora.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Metodología -->
+        <section id="metodologia" class="py-20 md:py-32" style="background-color: var(--dynamo-light-gray);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal">
+                    <h2 class="section-title">Diseño Centrado en el Usuario</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg" style="color: var(--dynamo-medium-gray);">
+                        El desarrollo de Dynamood se basa en la metodología de Diseño Centrado en el Usuario (DCU), la cual involucra activamente a los usuarios en todas las etapas del proceso para crear soluciones útiles y alineadas con sus expectativas reales.
+                    </p>
+                </div>
+                <!-- Nueva Línea de Tiempo -->
+                <div class="mt-20 timeline-container hidden md:block">
+                    <!-- Item 1 -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 text-right"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">01</span><h3 class="text-xl font-bold mt-2">Investigación</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Recolección de datos mediante encuestas, entrevistas y análisis de competencia.</p></div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 text-left"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">02</span><h3 class="text-xl font-bold mt-2">Definición</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Identificación de los principales problemas de comunicación y accesibilidad.</p></div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 text-right"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">03</span><h3 class="text-xl font-bold mt-2">Diseño</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Desarrollo de la interfaz, la estructura visual, el mapa de navegación y los prototipos.</p></div>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 text-left"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">04</span><h3 class="text-xl font-bold mt-2">Evaluación</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Validación de prototipos con los usuarios y ajustes realizados a partir de la retroalimentación.</p></div>
+                    </div>
+                </div>
+                <!-- Vista de tarjetas para móvil -->
+                <div class="mt-12 grid grid-cols-1 gap-6 md:hidden">
+                    <div class="card p-6 reveal"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">01</span><h3 class="text-xl font-bold mt-2">Investigación</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Recolección de datos mediante encuestas, entrevistas y análisis de competencia.</p></div>
+                    <div class="card p-6 reveal"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">02</span><h3 class="text-xl font-bold mt-2">Definición</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Identificación de los principales problemas de comunicación y accesibilidad.</p></div>
+                    <div class="card p-6 reveal"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">03</span><h3 class="text-xl font-bold mt-2">Diseño</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Desarrollo de la interfaz, la estructura visual, el mapa de navegación y los prototipos.</p></div>
+                    <div class="card p-6 reveal"><span class="font-bold text-lg" style="color: var(--dynamo-blue);">04</span><h3 class="text-xl font-bold mt-2">Evaluación</h3><p class="mt-2" style="color: var(--dynamo-medium-gray);">Validación de prototipos con los usuarios y ajustes realizados a partir de la retroalimentación.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Resultados y Campaña -->
+        <section id="resultados" class="py-20 md:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="section-title">Resultados del Prototipo</h2>
+                    <p class="mt-4 text-lg" style="color: var(--dynamo-medium-gray);">
+                        El prototipo final presenta una interfaz limpia, funcional e intuitiva, mejorando la comunicación, centralizando la información y reduciendo el estrés.
+                    </p>
+                    <div class="mt-8">
+                        <a href="https://www.figma.com/proto/jshe8ZgqzSoSfPVk2wLOCL/Dynamood-Final?node-id=257-44&starting-point-node-id=257%3A44&scaling=scale-down&content-scaling=fixed" target="_blank" class="btn btn-primary">Ver prototipo en Figma</a>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h3 class="text-3xl font-bold">Campaña “Ruido Gráfico”</h3>
+                    <p class="mt-4" style="color: var(--dynamo-medium-gray);">
+                        Para sensibilizar sobre la saturación visual, lanzamos la campaña “Ruido Gráfico” en redes sociales. El mensaje <span class="font-semibold text-gray-700">“Demasiada información, cero claridad”</span>, contrastó piezas caóticas con versiones limpias, generando alta participación y fomentando la reflexión sobre la comunicación visual responsable.
+                    </p>
+                    <!-- Imágenes de la campaña -->
+                    <div class="mt-8 grid grid-cols-2 gap-4">
+                        <img src="img/camun.jpg" alt="Ejemplo de diseño caótico" class="campaign-image rounded-lg shadow-md w-full aspect-square object-cover">
+                        <img src="img/martin.jpg" alt="Ejemplo de diseño limpio" class="campaign-image rounded-lg shadow-md w-full aspect-square object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Aliados Estratégicos -->
+        <section id="aliados" class="py-20 md:py-32" style="background-color: var(--dynamo-light-gray);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal">
+                    <h2 class="section-title">Aliados Estratégicos</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg" style="color: var(--dynamo-medium-gray);">
+                        Colaboramos con líderes en tecnología y emprendimiento para fortalecer nuestro crecimiento y modelo de negocio.
+                    </p>
+                </div>
+                <div class="mt-16 logo-marquee-container reveal">
+                    <div class="logo-marquee-content">
+                        <!-- Logos Originales -->
+                        <div class="logo-item"><img src="img/logo-mintic.png" alt="Logo MINTIC Apps.co" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-cun.png" alt="Logo CUN" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-google-startups.png" alt="Logo Google for Startups" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-aws.png" alt="Logo AWS Activate" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-edtech.png" alt="Logo EdTech Hub" class="ally-logo"></div>
+                        
+                        <!-- Logos Duplicados para el efecto infinito -->
+                        <div class="logo-item"><img src="img/logo-mintic.png" alt="Logo MINTIC Apps.co" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-cun.png" alt="Logo CUN" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-google-startups.png" alt="Logo Google for Startups" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-aws.png" alt="Logo AWS Activate" class="ally-logo"></div>
+                        <div class="logo-item"><img src="img/logo-edtech.png" alt="Logo EdTech Hub" class="ally-logo"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Nuevas Líneas de Producto -->
+        <section id="productos" class="py-20 md:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal">
+                    <h2 class="section-title">Nuevas Líneas de Producto</h2>
+                </div>
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Tarjeta Producto 1: Dynamood Community -->
+                    <div class="card reveal overflow-hidden">
+                        <img src="https://placehold.co/600x400/F8F9FB/111827?text=Mockup+Community" alt="Mockup de Dynamood Community" class="w-full h-64 object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold">Dynamood Community</h3>
+                            <p class="mt-3" style="color: var(--dynamo-medium-gray);">Espacio colaborativo para estudiantes y profesionales enfocado en proyectos e innovación. Integra herramientas como Kanban, Scrum y diagramas de Gantt.</p>
+                            <a href="https://www.figma.com/proto/OlCbd2cz4nnMkcQUmZD1zo/Dynamood-Comunity?node-id=0-1&p=f&t=GcnwPe8PISt95HwM-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=257%3A44" target="_blank" class="btn btn-primary mt-6">Ver prototipo Community</a>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta Producto 2: Dynamood Ads -->
+                    <div class="card reveal overflow-hidden" style="transition-delay: 0.1s;">
+                        <img src="https://placehold.co/600x400/F8F9FB/111827?text=Mockup+Ads" alt="Mockup de Dynamood Ads" class="w-full h-64 object-cover">
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold">Dynamood Ads</h3>
+                            <p class="mt-3" style="color: var(--dynamo-medium-gray);">Sistema de publicidad segmentada con IA que permite a las marcas conectar con comunidades estudiantiles, generando valor y una fuente de monetización sostenible.</p>
+                            <a href="https://www.figma.com/proto/ZpLv3yrlsCIHYclHWOoLxr/Dynamood-Add?node-id=257-44&p=f&t=TXXP0NnrEXjUuLvA-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=257%3A44" target="_blank" class="btn btn-primary mt-6">Ver prototipo Ads</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Estrategias de Crecimiento -->
+        <section id="crecimiento" class="py-20 md:py-32" style="background-color: var(--dynamo-light-gray);"> 
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal">
+                    <h2 class="section-title">Estrategias de Crecimiento</h2>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Estrategia Push -->
+                    <div class="card p-8 reveal">
+                        <i data-feather="send" class="w-10 h-10 mb-4" style="color: var(--dynamo-blue);"></i>
+                        <h3 class="text-xl font-bold">Estrategia Push</h3>
+                        <p class="mt-2" style="color: var(--dynamo-medium-gray);">Campañas directas (email, LinkedIn) a instituciones y aliados para aumentar la visibilidad y generar alianzas.</p>
+                    </div>
+                    <!-- Estrategia Pull -->
+                    <div class="card p-8 reveal" style="transition-delay: 0.1s;">
+                        <i data-feather="magnet" class="w-10 h-10 mb-4" style="color: var(--dynamo-blue);"></i>
+                        <h3 class="text-xl font-bold">Estrategia Pull</h3>
+                        <p class="mt-2" style="color: var(--dynamo-medium-gray);">Creación de contenido de valor (webinars, blogs) para atraer usuarios de forma orgánica y fidelizarlos.</p>
+                    </div>
+                    <!-- Estrategia B2B2C -->
+                    <div class="card p-8 reveal" style="transition-delay: 0.2s;">
+                        <i data-feather="briefcase" class="w-10 h-10 mb-4" style="color: var(--dynamo-blue);"></i>
+                        <h3 class="text-xl font-bold">Estrategia B2B2C</h3>
+                        <p class="mt-2" style="color: var(--dynamo-medium-gray);">Colaboración con universidades que actúan como puente para escalar la implementación y fortalecer la credibilidad.</p>
+                    </div>
+                </div>
+                <!-- Espacio para imagen de Estrategias de Crecimiento -->
+                <div class="mt-16 reveal">
+                    <img src="https://placehold.co/1200x400/2D436C/FFFFFF?text=Estrategias+de+Crecimiento+Visual" 
+                         alt="Imagen representativa de las estrategias de crecimiento" class="w-full rounded-xl shadow-lg">
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Economía Naranja -->
+        <section id="economia-naranja" class="py-20 md:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <img src="https://placehold.co/600x600/FFF7ED/F97316?text=Creatividad+e+Innovación" alt="Imagen conceptual de Economía Naranja" class="rounded-xl shadow-xl w-full">
+                </div>
+                <div class="reveal">
+                    <h2 class="section-title">Economía Naranja</h2>
+                    <p class="mt-4 text-lg" style="color: var(--dynamo-medium-gray);">
+                        Dynamood forma parte del ecosistema de la Economía Naranja al integrar creatividad, diseño y tecnología en la educación. Esto nos permite acceder a beneficios e incentivos estatales, consolidando un modelo sostenible con proyección nacional e internacional.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="footer" style="background-color: var(--dynamo-blue);">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Iconos de Redes Sociales -->
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300" aria-label="LinkedIn">
+                    <i data-feather="linkedin" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300" aria-label="Instagram">
+                    <i data-feather="instagram" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300" aria-label="Twitter">
+                    <i data-feather="twitter" class="w-6 h-6"></i>
+                </a>
+            </div>
+            <p class="text-lg text-white">&copy; <span id="year"></span> Dynamood. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- Pantalla de Carga ---
+        const preloader = document.querySelector('.preloader');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                preloader.classList.add('loaded');
+            }, 500); // Mínimo 500ms de visualización
+        });
+
+        // --- Cursor Personalizado ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        // Only initialize custom cursor if not on a touch device
+        if (window.matchMedia("(hover: hover)").matches) { // Check for hover capability
+            const interactiveElements = document.querySelectorAll('a, button, .card, #scene'); // Añadido #scene para el cursor
+
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: 'forwards' });
+            });
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover')); // Use mouseenter/mouseleave for better UX
+                el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+            });
+        }
+
+        // --- Iconos ---
+        feather.replace();
+
+        // --- Animaciones de Revelado en Scroll ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Añadir un pequeño retraso para un efecto más escalonado si se desea
+                    const delay = parseInt(entry.target.style.transitionDelay) || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('reveal-visible');
+                    }, delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        revealElements.forEach((el, index) => {
+             // Aplicar un retraso escalonado a elementos en la misma sección
+             // const parent = el.closest('section, div.grid');
+             // if(parent && parent.contains(el)) {
+             //     const siblings = Array.from(parent.querySelectorAll('.reveal'));
+             //     const elIndex = siblings.indexOf(el);
+             //     el.style.transitionDelay = `${elIndex * 100}ms`;
+             // }
+            observer.observe(el);
+        });
+
+        // --- Actualizar Año del Footer ---
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- Mobile Navigation Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const navLinks = document.getElementById('nav-links');
+        mobileMenuButton.addEventListener('click', () => {
+            if (navLinks.classList.contains('hidden')) {
+                navLinks.classList.remove('hidden');
+                navLinks.classList.add('flex', 'flex-col', 'absolute', 'top-16', 'right-4', 'p-4', 'space-x-0', 'space-y-2');
+            } else {
+                navLinks.classList.add('hidden');
+                navLinks.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'right-4', 'p-4', 'space-x-0', 'space-y-2');
+            }
+        });
+
+        // --- Script para el modelo 3D del celular (nueva implementación) ---
+        const scene = document.getElementById('scene');
+        const resetPhoneViewButton = document.getElementById('reset-phone-view');
+        if (!scene) return; // Salir si el elemento no existe
+
+        let rotX = -10, rotY = 0, isDown = false, lastX = 0, lastY = 0; // Cambiado rotY a 0 para vista centrada
+        let autoRotateAnimationId; // Para almacenar el ID de requestAnimationFrame
+        let autoRotateSpeed = 0.05; // Grados por frame para el giro automático
+        let isAutoRotating = true; // Bandera para controlar el giro automático
+        const initialRotX = -10; // Variable que faltaba
+        const initialRotY = 0; // Cambiado initialRotY a 0
+
+        function update() {
+            scene.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+
+        function animateAutoRotate() {
+            if (isAutoRotating && !isDown) { // Solo gira automáticamente si está habilitado y no hay interacción manual
+                rotY += autoRotateSpeed;
+                update();
+                autoRotateAnimationId = requestAnimationFrame(animateAutoRotate);
+            }
+        }
+
+        function startAutoRotate() {
+            if (!isAutoRotating) {
+                isAutoRotating = true;
+                animateAutoRotate();
+            }
+        }
+
+        function stopAutoRotate() {
+            if (isAutoRotating) {
+                isAutoRotating = false;
+                cancelAnimationFrame(autoRotateAnimationId);
+            }
+        }
+
+        // Iniciar el giro automático al cargar
+        startAutoRotate();
+
+        // Event listeners para la interacción del modelo 3D
+        scene.addEventListener('pointerdown', (e) => {
+            isDown = true;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            scene.style.cursor = 'grabbing';
+            e.target.setPointerCapture && e.target.setPointerCapture(e.pointerId); // Capturar el puntero
+            stopAutoRotate(); // Detener el giro automático al interactuar
+        });
+
+        window.addEventListener('pointermove', (e) => {
+            if (!isDown) return;
+            rotY += (e.clientX - lastX) * 0.15; // Reducido para hacer la rotación más lenta
+            rotX -= (e.clientY - lastY) * 0.15; // Reducido para hacer la rotación más lenta
+            rotX = Math.max(-80, Math.min(80, rotX)); // Limitar rotación en X
+            update();
+            lastX = e.clientX;
+            lastY = e.clientY;
+        });
+
+        window.addEventListener('pointerup', () => {
+            isDown = false;
+            scene.style.cursor = 'grab';
+            // Reanuda el giro automático después de un breve retraso
+            setTimeout(startAutoRotate, 2000); // Espera 2 segundos antes de volver a girar
+        });
+
+        // Funcionalidad del botón de restablecimiento
+        resetPhoneViewButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que el clic se propague al 'scene' y active el arrastre.
+            rotX = initialRotX;
+            rotY = initialRotY;
+            update();
+            startAutoRotate(); // Reanudar el giro automático al restablecer
+        });
+
+        update(); // Aplicar transformación inicial
+    });
+
+    // --- Script para marcar el enlace activo del menú ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('#nav-links a.nav-link');
+
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute('href').split('/').pop().split('#')[0];
+            
+            // Si estamos en la página principal (index.html o vacía) y el enlace es para la página principal.
+            if ((currentPage === 'index.html' || currentPage === '') && (linkPage === 'index.html' || linkPage.startsWith('index.html#'))) {
+                 // No hacemos nada para los enlaces de ancla de la página de inicio
+            } else if (linkPage === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // --- Script para ocultar/mostrar el menú al hacer scroll ---
+    document.addEventListener('DOMContentLoaded', function() {
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('main-nav');
+        const navbarHeight = navbar.offsetHeight;
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+                // Scroll Down
+                navbar.classList.add('nav-hidden');
+            } else {
+                // Scroll Up
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
+    });
+    </script>
+</body>
+</html>

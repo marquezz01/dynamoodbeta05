@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Lato:wght@400;700&display=swap');
+
+:root {
+    --bg-dark: #2C3E50; /* Dark Slate Gray */
+    --bg-light: #FFFFFF;
+    --text-light: #ECF0F1;
+    --text-dark: #34495E;
+    --accent: #E67E22; /* Warm Orange */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.promo-container {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--bg-light);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* --- Header --- */
+.header-section {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: 20px;
+    text-align: center;
+}
+
+.logo-placeholder {
+    border: 2px dashed var(--text-light);
+    padding: 10px;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.main-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+.subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+.since-text {
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+/* --- Content --- */
+.content-section {
+    position: relative;
+}
+
+.food-image-area {
+    height: 250px;
+    background-image: url('https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.text-promo {
+    padding: 30px 20px;
+    text-align: center;
+    padding-top: 80px; /* Make space for overlapping price bubble */
+}
+
+.description {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.price-bubble {
+    width: 120px;
+    height: 120px;
+    background-color: var(--accent);
+    color: var(--text-light);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 190px; /* Overlap image */
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid var(--bg-light);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.only-text {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.price-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+/* --- Footer --- */
+.footer-section {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: 20px;
+    text-align: center;
+}
+
+.book-now-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.phone-number {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.website {
+    font-size: 1rem;
+}

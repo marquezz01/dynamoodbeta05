@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño Estratégico - Dynamood</title>
+    
+    <!-- Metatags para SEO y redes sociales -->
+    <meta name="description" content="Explora el enfoque de Diseño Estratégico de Dynamood, donde combinamos creatividad, tecnología y negocio.">
+    <meta property="og:title" content="Diseño Estratégico - Dynamood">
+    <meta property="og:description" content="Descubre cómo aplicamos el diseño estratégico para crear soluciones innovadoras y sostenibles.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://placehold.co/1200x630/2D436C/FFFFFF?text=DISEÑO+ESTRATÉGICO">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Futura:wght@400;700&family=Inter:wght@400;500;700;800&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Font Awesome para los iconos de la tabla -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="css/shared-styles.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Estilos adicionales o específicos para esta página pueden ir aquí */
+        .section-title {
+             font-family: 'Futura', sans-serif;
+             font-size: clamp(2.5rem, 6vw, 3.5rem);
+             font-weight: 700;
+             color: var(--dynamo-dark-gray);
+             line-height: 1.1;
+        }
+        .subsection-title {
+            font-family: 'Futura', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--dynamo-blue);
+        }
+
+        /* Efecto Aurora Boreal */
+        .aurora-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; overflow: hidden; }
+        .aurora-bg::before, .aurora-bg::after {
+            content: ''; position: absolute; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, rgba(45, 67, 108, 0.1) 0%, transparent 40%);
+            border-radius: 50%; opacity: 0.5; mix-blend-mode: screen;
+            animation: aurora-flow 25s infinite linear;
+        }
+        .aurora-bg::after {
+            background: radial-gradient(circle at center, rgba(70, 147, 208, 0.1) 0%, transparent 45%);
+            animation-name: aurora-flow-2; animation-duration: 35s;
+        }
+        @keyframes aurora-flow { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(1.5); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(1.5); } }
+        @keyframes aurora-flow-2 { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(1.8); } 100% { transform: translate(-50%, -50%) rotate(-360deg) scale(1.8); } }
+
+        /* Estilos para tablas */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .custom-table th, .custom-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .custom-table th {
+            font-family: 'Futura', sans-serif;
+            font-weight: 700;
+            color: var(--dynamo-blue);
+            background-color: #f9fafb;
+        }
+
+
+        /* Estilos para tarjetas y componentes nuevos */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            border-left: 3px solid var(--dynamo-sky-blue);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            --dot-color: var(--dynamo-orange); /* Variable para el color del punto */
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -48px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--dot-color);
+        }
+
+        /* Estilos para la tabla de Benchmarking */
+        .comparison-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+        
+        .bench-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .bench-table thead {
+            background: linear-gradient(135deg, var(--dynamo-blue) 0%, #1e3a5f 100%);
+            color: white;
+        }
+        
+        .bench-table th {
+            padding: 20px 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+        }
+        
+        .bench-table th:first-child {
+            text-align: left;
+            padding-left: 25px;
+        }
+        
+        .dynamood-header {
+            background: linear-gradient(135deg, var(--dynamo-purple) 0%, #560bad 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dynamood-header::after {
+            content: "MEJOR";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--dynamo-accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-top-left-radius: 5px;
+        }
+        
+        .bench-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Se mantiene el hover para todas las filas */
+        .bench-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .bench-table td {
+            padding: 18px 15px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .bench-table td:first-child {
+            text-align: left;
+            padding-left: 25px;
+            font-weight: 500;
+            width: 25%;
+        }
+        
+        .feature-name {
+            font-weight: 500;
+            color: var(--dynamo-dark-gray);
+        }
+        
+        .check {
+            color: #2ecc71;
+            font-size: 1.3rem;
+        }
+        /* Estilo para los iconos de 'x' */
+        .times-icon {
+            color: var(--dynamo-error-red);
+            font-size: 1.3rem; /* Mismo tamaño que los checks */
+        }
+        
+        .dynamood-cell {
+            background-color: rgba(114, 9, 183, 0.05);
+            font-weight: 600;
+            color: var(--dynamo-purple);
+        }
+        
+        .total-row {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .score {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .score-dynamood {
+            background: linear-gradient(135deg, var(--dynamo-purple) 0%, #560bad 100%);
+            box-shadow: 0 4px 10px rgba(114, 9, 183, 0.3);
+        }
+        
+        .score-others {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        /* Estilos para el acordeón de Benchmarking */
+        .accordion-header {
+            cursor: pointer;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-content.open {
+            max-height: 2000px; /* Un valor suficientemente grande para el contenido */
+        }
+        .accordion-icon {
+            transition: transform 0.4s ease;
+        }
+        .accordion-icon.open {
+            transform: rotate(180deg);
+        }
+
+        /* Nuevos Estilos para el Mapa de Públicos y Relaciones */
+        .relations-map {
+            position: relative;
+            padding: 3rem 1rem;
+            background-color: #f9fafb;
+            border-radius: 1rem;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .map-node {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .map-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(45, 68, 108, 0.1);
+        }
+
+        .map-node h4 {
+            font-family: 'Futura', sans-serif;
+            font-weight: 700;
+            color: var(--dynamo-blue);
+            font-size: 1.1rem;
+        }
+
+        .map-node p {
+            font-size: 0.875rem;
+            color: var(--dynamo-medium-gray);
+        }
+
+        .map-node.dynamood-core {
+            background-color: var(--dynamo-blue);
+            color: white;
+            box-shadow: 0 8px 25px rgba(45, 68, 108, 0.25);
+        }
+
+        .map-node.dynamood-core h4, .map-node.dynamood-core p {
+            color: white;
+        }
+
+        /* Conectores del mapa */
+        .map-connector {
+            position: absolute;
+            background-color: #d1d5db;
+            z-index: 1;
+        }
+        .map-connector.vertical { width: 2px; }
+        .map-connector.horizontal { height: 2px; }
+
+        @media (max-width: 767px) {
+            .relations-map { padding: 2rem 1rem; }
+        }
+
+        /* Estilos para el Manual de Identidad Visual */
+        .identity-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+        
+        .identity-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 20px;
+        }
+        
+        .intro-text {
+            font-size: 16px;
+            background-color: #f0f7ff;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 4px solid #4693D0;
+            color: #444;
+            margin-bottom: 16px;
+        }
+        
+        .color-palette {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 15px;
+        }
+        
+        .color-card {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .color-swatch {
+            height: 100px;
+        }
+        
+        .color-info {
+            padding: 15px;
+            background-color: white;
+        }
+        
+        .color-hex {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .color-values {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #4693D0, transparent);
+            margin: 35px 0;
+        }
+        
+        .typography-section {
+            margin: 25px 0;
+        }
+        
+        .typography-title {
+            font-weight: 700;
+            color: #2D446C;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        
+        .brand-section {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 4px solid #F7A429;
+        }
+        
+        .brand-title {
+            font-weight: 700;
+            color: #2D446C;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .weight-info {
+            display: flex;
+            margin: 20px 0;
+            gap: 20px;
+        }
+        
+        .weight-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        
+        .weight-name {
+            font-weight: 700;
+            color: #2D446C;
+            margin-bottom: 8px;
+        }
+
+        /* Estilos para el submenú de la página */
+        .page-nav-link {
+            transition: all 0.3s ease;
+        }
+        .page-nav-link:hover {
+            background-color: #e5e7eb;
+            color: var(--dynamo-blue);
+        }
+        .page-nav-link.active {
+            background-color: var(--dynamo-blue);
+            color: var(--dynamo-white) !important;
+        }
+        
+        .weight-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        .identity-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* Forzar 2 columnas */
+        }
+
+        /* Estilos para la nueva Ruta de Implementación */
+        .roadmap-container {
+            position: relative;
+            padding-top: 50px; /* Espacio para los iconos */
+            margin-top: 1rem;
+        }
+        .roadmap-line {
+            position: absolute;
+            top: 20px; /* Alineado con el centro de los iconos */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%; /* Ajustado para el centrado */
+            height: 4px;
+            background: var(--dynamo-blue); /* Color azul uniforme */
+            z-index: 1;
+        }
+        .roadmap-phase {
+            position: relative;
+            z-index: 10;
+        }
+        .roadmap-icon-wrapper {
+            position: absolute;
+            top: -30px; /* Posiciona el icono sobre la tarjeta */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 0 0 4px var(--dynamo-sky-blue);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cursor Personalizado -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navegación Flotante Futurista -->
+    <nav id="main-nav" class="sticky top-0 z-50 p-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <!-- Logo Capsule -->
+                <a href="index.html" class="nav-capsule shadow-md rounded-full p-2 hover:shadow-lg">
+                    <img src="img/logo-grande.png" alt="Dynamood Logo" class="h-8 nav-logo-img">
+                </a>
+                
+                <!-- Hamburger Menu (Mobile) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="nav-capsule shadow-md rounded-full p-2 focus:outline-none">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+                
+                <!-- Navigation Links & CTA Capsule -->
+                <div id="nav-links" class="nav-capsule hidden md:flex items-center space-x-1 shadow-md rounded-full p-1.5 hover:shadow-lg">
+                    <a href="index.html#que-es" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">El Proyecto</a>
+                    <a href="index.html#metodologia" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Metodología</a>
+                    <a href="index.html#aliados" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Aliados</a>
+                    <a href="diseno-estrategico.html" class="nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm active">Diseño estratégico</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+       
+
+        <!-- Submenú de Navegación de Página (Sticky) -->
+        <div id="page-nav" class="sticky top-[76px] z-40 bg-white/80 backdrop-blur-lg shadow-sm hidden md:block">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-center items-center space-x-2 py-2">
+                    <a href="#dofa" class="page-nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Matriz DOFA</a>
+                    <a href="#cultura-organizacional" class="page-nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Identidad Visual</a>
+                    <a href="#canvas" class="page-nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Business Model</a>
+                    <a href="#publicos" class="page-nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Mapa de Públicos</a>
+                    <a href="#implementacion" class="page-nav-link text-gray-600 font-medium px-4 py-2 rounded-full text-sm">Implementación</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido Principal -->
+        <section id="contenido-principal" class="py-12 md:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <img src="https://placehold.co/600x450/2D436C/FFFFFF?text=Impacto+Positivo" alt="Imagen sobre diseño estratégico e impacto" class="rounded-xl shadow-2xl w-full">
+                </div>
+                <div class="reveal text-lg space-y-6" style="color: var(--dynamo-medium-gray);">
+                    <p><strong>Dynamood es una empresa colombiana dedicada al diseño y desarrollo de aplicaciones digitales para el sector educativo y corporativo.</strong> Su enfoque se basa en crear experiencias interactivas y funcionales que faciliten la comunicación y mejoren los procesos de aprendizaje.</p>
+                    <p>Con un propósito sustentable, Dynamood promueve el uso responsable de la tecnología, impulsando soluciones digitales que reducen el consumo de recursos físicos como papel y energía, y fomentan la educación ambiental y social a través de sus proyectos.</p>
+                    <p>Surge ante la necesidad de herramientas tecnológicas más humanas y sostenibles, capaces de conectar innovación, educación y responsabilidad ecológica, demostrando que el diseño estratégico puede generar un impacto positivo tanto en las personas como en el entorno.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Matriz DOFA -->
+        <section id="dofa" class="py-12 md:py-20" style="background-color: var(--dynamo-light-gray);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal">
+                    <h2 class="section-title">Matriz DOFA</h2>
+                </div>
+                <!-- Contenedor de la cuadrícula DOFA (Rediseñado) -->
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                    <!-- Card: Fortalezas -->
+                    <div class="card p-6">
+                        <div class="flex items-start gap-4">
+                            <i data-feather="shield" class="w-8 h-8 flex-shrink-0 mt-1" style="color: var(--dynamo-blue);"></i>
+                            <div class="flex-grow text-left">
+                                <h3 class="subsection-title mb-3 text-xl">Fortalezas</h3>
+                                <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">Enfoque en DCU.</li><li class="pl-1">Equipo multidisciplinario.</li><li class="pl-1">Identidad visual sólida.</li><li class="pl-1">Diseño sostenible.</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card: Oportunidades -->
+                    <div class="card p-6">
+                        <div class="flex items-start gap-4">
+                            <i data-feather="trending-up" class="w-8 h-8 flex-shrink-0 mt-1" style="color: var(--dynamo-blue);"></i>
+                            <div class="flex-grow text-left">
+                                <h3 class="subsection-title mb-3 text-xl">Oportunidades</h3>
+                                <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">Crecimiento del sector edtech.</li><li class="pl-1">Interés en proyectos con RSE.</li><li class="pl-1">Alianzas público-privadas.</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card: Debilidades -->
+                    <div class="card p-6">
+                        <div class="flex items-start gap-4">
+                            <i data-feather="alert-triangle" class="w-8 h-8 flex-shrink-0 mt-1" style="color: var(--dynamo-orange);"></i>
+                            <div class="flex-grow text-left">
+                                <h3 class="subsection-title mb-3 text-xl">Debilidades</h3>
+                                <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">Poca visibilidad de marca.</li><li class="pl-1">Dependencia de contratos.</li><li class="pl-1">Requiere inversión en marketing.</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card: Amenazas -->
+                    <div class="card p-6">
+                        <div class="flex items-start gap-4">
+                            <i data-feather="alert-octagon" class="w-8 h-8 flex-shrink-0 mt-1" style="color: var(--dynamo-orange);"></i>
+                            <div class="flex-grow text-left">
+                                <h3 class="subsection-title mb-3 text-xl">Amenazas</h3>
+                                <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">Alta competencia.</li><li class="pl-1">Obsolescencia tecnológica.</li><li class="pl-1">Saturación del mercado.</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cultura Organizacional / Manual de Identidad -->
+        <section id="cultura-organizacional" class="py-12 md:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Manual de Identidad Visual</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg" style="color: var(--dynamo-medium-gray);">
+                        Este manual unifica nuestro lenguaje gráfico, asegurando coherencia y reflejando los valores de innovación, adaptabilidad y colaboración de Dynamood.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10 items-start">
+                    <!-- Columna Izquierda: Paleta y Tipografía -->
+                    <div class="space-y-8">
+                        <div class="card p-8">
+                            <h3 class="subsection-title mb-6">Paleta de colores</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="color-card"><div class="color-swatch" style="background-color: #2D446C;"></div><div class="color-info"><div class="color-hex">#2D446C</div><div class="color-values text-xs">R:45 G:68 B:108</div></div></div>
+                                <div class="color-card"><div class="color-swatch" style="background-color: #4693D0;"></div><div class="color-info"><div class="color-hex">#4693D0</div><div class="color-values text-xs">R:70 G:147 B:208</div></div></div>
+                                <div class="color-card"><div class="color-swatch" style="background-color: #F7A429;"></div><div class="color-info"><div class="color-hex">#F7A429</div><div class="color-values text-xs">R:247 G:164 B:41</div></div></div>
+                            </div>
+                        </div>
+                        <div class="card p-8">
+                            <h3 class="subsection-title mb-4">Tipografía</h3>
+                            <p class="mb-6"><strong>Futura</strong> se adopta como tipografía principal. Su estilo geométrico, moderno y legible refuerza la claridad y el enfoque digital de la marca.</p>
+                            <div class="weight-info">
+                                <div class="weight-item"><div class="weight-name">Bold</div><div class="weight-desc">Para titulares</div></div>
+                                <div class="weight-item"><div class="weight-name">Medium</div><div class="weight-desc">Para subtítulos</div></div>
+                                <div class="weight-item"><div class="weight-name">Book</div><div class="weight-desc">Para cuerpo de texto</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Columna Derecha: Icono de Marca y Logo -->
+                    <div class="card p-8 text-center">
+                        <h3 class="subsection-title mb-4">Icono de Marca</h3>
+                        <p class="max-w-2xl mx-auto">El <strong>camaleón</strong> se consolida como elemento icónico. Representa adaptabilidad, transformación y versatilidad, reflejando la capacidad del equipo para reinventarse.</p>
+                        <img src="img/logo-grande.png" alt="Icono de Marca Dynamood" class="w-full max-w-xs mx-auto mt-8">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Model Canvas Section -->
+        <section id="canvas" class="py-12 md:py-20" style="background-color: var(--dynamo-light-gray);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal mb-6">
+                    <h2 class="section-title">Business Model Canvas</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-base md:text-lg" style="color: var(--dynamo-medium-gray);">
+                        Dynamood es una aplicación académica que mejora la comunicación entre estudiantes, docentes e institución, integrando funciones que van más allá de lo académico.
+                    </p>
+                </div>
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Socios clave -->
+                    <div class="card p-6 reveal">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="users" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Socios clave</h3></div>
+                        <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">CUN y demás instituciones educativas.</li><li class="pl-1">APPS.CO</li><li class="pl-1">Google for Startups</li><li class="pl-1">AWS Activate</li><li class="pl-1">EdTech Hub</li><li class="pl-1">Empresas tecnológicas (hosting, ciberseguridad, soporte).</li><li class="pl-1">Marcas estudiantiles (tecnología, librerías, transporte, alimentación).</li></ul>
+                    </div>
+                    <!-- Actividades clave -->
+                    <div class="card p-6 reveal">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="settings" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Actividades clave</h3></div>
+                        <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">Desarrollo y mejora continua de la app.</li><li class="pl-1">Integración académica (notas, horarios, trabajos, carné digital).</li><li class="pl-1">Marketing digital y participación en ferias tecnológicas y educativas.</li><li class="pl-1">Gestión de alianzas estratégicas y convenios institucionales.</li></ul>
+                    </div>
+                    <!-- Propuesta de valor -->
+                    <div class="card p-6 reveal md:col-span-2 lg:col-span-1">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="gift" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Propuesta de valor</h3></div>
+                        <p class="text-sm" style="color: var(--dynamo-medium-gray);">Dynamood se diferencia por ser la única aplicación académica que integra la comunicación entre estudiantes, docentes e institución. A diferencia de otras plataformas, combina la interacción en tiempo real con funciones de gestión como consulta de notas, entrega de trabajos y carné digital, ofreciendo un ecosistema único que reduce la desinformación, aumenta la eficiencia y fortalece la experiencia universitaria.</p>
+                    </div>
+                    <!-- Recursos clave -->
+                    <div class="card p-6 reveal">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="tool" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Recursos clave</h3></div>
+                        <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">Equipo de desarrollo de software y UX/UI.</li><li class="pl-1">Servidores y almacenamiento en la nube.</li><li class="pl-1">Red de aliados estratégicos que aportan visibilidad y soporte.</li><li class="pl-1">Equipo de marketing.</li></ul>
+                    </div>
+                    <!-- Relaciones con clientes -->
+                    <div class="card p-6 reveal">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="heart" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Relaciones con clientes</h3></div>
+                        <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1"><strong>Adquisición:</strong> campañas digitales, ferias universitarias y convenios con instituciones.</li><li class="pl-1"><strong>Retención:</strong> soporte vía tickets, notificaciones push, tutoriales y encuestas de satisfacción.</li><li class="pl-1"><strong>Crecimiento:</strong> recomendaciones entre estudiantes, funciones premium y comunidad activa dentro de la app.</li></ul>
+                    </div>
+                    <!-- Segmentos de clientes -->
+                    <div class="card p-6 reveal md:col-span-2 lg:col-span-1">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="target" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Segmentos de clientes</h3></div>
+                        <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1"><strong>Estudiantes universitarios:</strong> necesitan organización, comunicación y soporte digital.</li><li class="pl-1"><strong>Docentes:</strong> requieren centralizar calificaciones, trabajos y comunicación.</li><li class="pl-1"><strong>Instituciones educativas:</strong> buscan optimizar procesos, reducir quejas y fortalecer su imagen innovadora.</li></ul>
+                    </div>
+                    <!-- Estructura de costos -->
+                    <div class="card p-6 lg:col-span-2 md:col-span-2 reveal">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="file-text" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Estructura de costos</h3></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 text-sm" style="color: var(--dynamo-medium-gray);">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li class="pl-1"><strong>Costos fijos:</strong> desarrollo de software, servidores, ciberseguridad, soporte técnico.</li>
+                                <li class="pl-1"><strong>Costos variables:</strong> campañas de marketing digital, ferias y eventos.</li>
+                            </ul>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li class="pl-1"><strong>Inversión inicial:</strong> infraestructura tecnológica y posicionamiento de marca.</li>
+                                <li class="pl-1"><strong>Crecimiento/innovación:</strong> nuevas funcionalidades y alianzas estratégicas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Fuentes de ingresos -->
+                    <div class="card p-6 reveal">
+                        <div class="flex items-center gap-3 mb-3"><i data-feather="dollar-sign" class="w-6 h-6" style="color: var(--dynamo-blue);"></i><h3 class="subsection-title text-xl">Fuentes de ingresos</h3></div>
+                        <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);"><li class="pl-1">Licencias institucionales (anuales o semestrales).</li><li class="pl-1">Modelo freemium con funciones premium de pago.</li><li class="pl-1">Publicidad segmentada (Dynamood Ads) enfocada en jóvenes universitarios.</li><li class="pl-1">Alianzas estratégicas con marcas tecnológicas y de consumo estudiantil.</li></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mapa de Públicos y Relaciones -->
+        <section id="publicos" class="py-12 md:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="publicos-toggle" class="accordion-header text-center reveal">
+                    <h2 class="section-title inline-block">Mapa de Públicos y Relaciones</h2>
+                    <i data-feather="chevron-down" class="inline-block w-12 h-12 ml-2 text-gray-400 accordion-icon"></i>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg" style="color: var(--dynamo-medium-gray);">
+                        Identificación de los actores clave y su interconexión con el propósito de Dynamood.
+                    </p>
+                </div>
+
+                <div id="publicos-content" class="accordion-content mt-10">
+                    <!-- Públicos Clave (Rediseñado) -->
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="card p-6 reveal">
+                            <h3 class="subsection-title text-xl mb-3">1. Usuarios Principales</h3>
+                            <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);">
+                                <li class="pl-1">Instituciones educativas (colegios, universidades).</li>
+                                <li class="pl-1">Docentes y estudiantes.</li>
+                                <li class="pl-1">Empresas corporativas para capacitación.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6 reveal" style="transition-delay: 0.1s;">
+                            <h3 class="subsection-title text-xl mb-3">2. Aliados Estratégicos</h3>
+                            <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);">
+                                <li class="pl-1">Entidades gubernamentales y ONG.</li>
+                                <li class="pl-1">Empresas tecnológicas con compromiso ambiental.</li>
+                                <li class="pl-1">Universidades y centros de investigación.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6 reveal" style="transition-delay: 0.2s;">
+                            <h3 class="subsection-title text-xl mb-3">3. Comunidad y Entorno</h3>
+                            <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);">
+                                <li class="pl-1">Usuarios indirectos (familias, comunidades).</li>
+                                <li class="pl-1">Proveedores sostenibles.</li>
+                                <li class="pl-1">Sociedad en general.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Centro del Ecosistema -->
+                    <div class="mt-12 text-center reveal">
+                        <div class="inline-block relative">
+                            <div class="map-node dynamood-core w-full max-w-xs mx-auto"><h4>DYNAMOOD</h4><p>Diseño, tecnología y sostenibilidad</p></div>
+                            <p class="mt-6 text-lg" style="color: var(--dynamo-medium-gray);">Actúa como el núcleo que conecta y aporta valor a todos los públicos a través de su propósito.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ruta de Implementación -->
+        <section id="implementacion" class="py-12 md:py-20" style="background-color: var(--dynamo-light-gray);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center reveal mb-12">
+                    <h2 class="section-title">Ruta de Implementación</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg" style="color: var(--dynamo-medium-gray);">
+                        Un plan estratégico en tres fases para consolidar la nueva identidad y el impacto de Dynamood.
+                    </p>
+                </div>
+
+                <div class="relative roadmap-container">
+                    <div class="roadmap-line hidden md:block"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        <!-- Fase 1: Corto Plazo -->
+                        <div class="roadmap-phase reveal">
+                            <div class="roadmap-icon-wrapper hidden md:flex" style="box-shadow: 0 0 0 4px var(--dynamo-blue);">
+                                <i data-feather="play-circle" class="w-6 h-6" style="color: var(--dynamo-blue);"></i>
+                            </div>
+                            <div class="card p-8 h-full">
+                                <h3 class="subsection-title text-2xl mb-3">Fase 1: Corto Plazo</h3>
+                                <p class="font-semibold text-gray-700 mb-4">Primeros Pasos y Prototipos</p>
+                                <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);">
+                                    <li>Rediseño del logo y sistema visual.</li>
+                                    <li>Desarrollo del moodboard y guía de estilo.</li>
+                                    <li>Creación de un prototipo web renovado.</li>
+                                    <li>Validación de la identidad visual.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Fase 2: Mediano Plazo -->
+                        <div class="roadmap-phase reveal" style="transition-delay: 0.2s;">
+                            <div class="roadmap-icon-wrapper hidden md:flex" style="box-shadow: 0 0 0 4px var(--dynamo-blue);">
+                                <i data-feather="fast-forward" class="w-6 h-6" style="color: var(--dynamo-blue);"></i>
+                            </div>
+                            <div class="card p-8 h-full">
+                                <h3 class="subsection-title text-2xl mb-3">Fase 2: Mediano Plazo</h3>
+                                <p class="font-semibold text-gray-700 mb-4">Desarrollo y Expansión</p>
+                                <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);">
+                                    <li>Implementación de la nueva identidad visual.</li>
+                                    <li>Optimización web con eco-diseño.</li>
+                                    <li>Lanzamiento de campañas de comunicación.</li>
+                                    <li>Establecimiento de alianzas clave.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Fase 3: Largo Plazo -->
+                        <div class="roadmap-phase reveal" style="transition-delay: 0.4s;">
+                            <div class="roadmap-icon-wrapper hidden md:flex" style="box-shadow: 0 0 0 4px var(--dynamo-blue);">
+                                <i data-feather="award" class="w-6 h-6" style="color: var(--dynamo-blue);"></i>
+                            </div>
+                            <div class="card p-8 h-full">
+                                <h3 class="subsection-title text-2xl mb-3">Fase 3: Largo Plazo</h3>
+                                <p class="font-semibold text-gray-700 mb-4">Consolidación y Evaluación</p>
+                                <ul class="list-disc list-inside space-y-2 text-sm" style="color: var(--dynamo-medium-gray);">
+                                    <li>Medición de impacto con KPIs.</li>
+                                    <li>Evaluación de la percepción de marca.</li>
+                                    <li>Expansión a nuevos mercados.</li>
+                                    <li>Publicación de informe anual de impacto.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="footer" style="background-color: var(--dynamo-blue);">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300" aria-label="LinkedIn"><i data-feather="linkedin" class="w-6 h-6"></i></a>
+                <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300" aria-label="Instagram"><i data-feather="instagram" class="w-6 h-6"></i></a>
+                <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300" aria-label="Twitter"><i data-feather="twitter" class="w-6 h-6"></i></a>
+            </div>
+            <p class="text-lg text-white">&copy; <span id="year"></span> Dynamood. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // --- Acordeones ---
+            function initAccordion(toggleId, contentId) {
+                const toggleButton = document.getElementById(toggleId);
+                const content = document.getElementById(contentId);
+                const icon = toggleButton.querySelector('.accordion-icon');
+
+                if (toggleButton && content && icon) {
+                    toggleButton.addEventListener('click', () => {
+                        content.classList.toggle('open');
+                        icon.classList.toggle('open');
+                    });
+                }
+            }
+            initAccordion('publicos-toggle', 'publicos-content');
+
+            // --- Cursor Personalizado ---
+            // Cursor
+            if (window.matchMedia("(hover: hover)").matches) {
+                const cursorDot = document.querySelector('.cursor-dot');
+                const cursorOutline = document.querySelector('.cursor-outline');
+                const interactiveElements = document.querySelectorAll('a, button, .card, .timeline-item, .accordion-header');
+
+                window.addEventListener('mousemove', (e) => {
+                    const posX = e.clientX;
+                    const posY = e.clientY;
+                    cursorDot.style.left = `${posX}px`;
+                    cursorDot.style.top = `${posY}px`;
+                    cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: 'forwards' });
+                });
+
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+                    el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+                });
+            }
+
+            // --- Animaciones de Revelado en Scroll ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = parseInt(entry.target.style.transitionDelay) || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('reveal-visible');
+                        }, delay);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => observer.observe(el));
+
+            // --- Marcar enlace activo del menú ---
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('#nav-links a.nav-link');
+
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                const linkPage = href.split('/').pop().split('#')[0];
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // --- Ocultar menú al hacer scroll ---
+            let lastScrollTop = 0;
+            const navbar = document.getElementById('main-nav');
+            const navbarHeight = navbar.offsetHeight;
+
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+                    // Scroll Down
+                    navbar.classList.add('nav-hidden');
+                } else {
+                    // Scroll Up
+                    navbar.classList.remove('nav-hidden');
+                }
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            }, false);
+        });
+
+        // --- Script para el submenú de la página ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageNavLinks = document.querySelectorAll('#page-nav a');
+            const sections = document.querySelectorAll('section[id]');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-80px 0px -50% 0px', // Activa cuando la sección está en el top 80px de la pantalla
+                threshold: 0
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        pageNavLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>         
+    </script>
+</body>
+</html>
